@@ -160,12 +160,12 @@ teleport.set_text('телепорт',15)
 for i,row in enumerate(map_list):# рисовка карты
         for j, el in enumerate(row):
             if el == 2:
-                pacman = Pacman("mashroom32.png",TILE*j, TILE*i,color = (YELLOW))
+                pacman = Pacman("images/mashroom32.png",TILE*j, TILE*i,color = (YELLOW))
             elif el == 1:
-                block = Block("block32.png",TILE*j,TILE*i,color = (0,0,255))
+                block = Block("images/block32.png",TILE*j,TILE*i,color = (0,0,255))
                 blocks.append(block)# элементы списка зоздаются как блоки
             elif el == 3:
-                finish = Picture("pixil-frame-0.png",TILE*j,TILE*i)
+                finish = Picture("images/pixil-frame-0.png",TILE*j,TILE*i)
                 pictures.append(finish)
 
 
@@ -173,7 +173,7 @@ game_runing = True
 timer = 1
 time = 0
 
-background=pygame.transform.scale(pygame.image.load("bg.jpg"),SIZE)
+background=pygame.transform.scale(pygame.image.load("images/bg.jpg"),SIZE)
 
 while game_runing:
     window.fill(BACK) # заливка фона
