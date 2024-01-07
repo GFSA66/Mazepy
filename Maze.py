@@ -169,8 +169,6 @@ while game_runing:
     pacman.update()
 
     
-
-    #print(pacman.rect.x,pacman.rect.y)
     
     if timer == FPS:
         time += 1
