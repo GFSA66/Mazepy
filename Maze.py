@@ -7,6 +7,7 @@ SIZE = (1152,512)
 TILE =32
 YELLOW = (255,255,0)
 step = 2
+# включаем все init()
 pygame.init()
 # начинаем создавать окно
 window =pygame.display.set_mode(SIZE)
@@ -18,10 +19,10 @@ window.fill(BACK)
 rect = pygame.Rect(10, 10, 200, 100)
 # заканчиваем создавать окно
 map_list = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-            [1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
-            [1,0,1,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,0,0,1],
-            [1,0,1,0,0,0,0,0,0,1,0,0,1,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,1],
+            [1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,1,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,0,0,1,1,1,1,0,0,1],
+            [1,0,1,0,0,0,0,0,0,1,0,0,1,1,1,1,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,1,0,0,1],
             [1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,1],
             [1,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,1,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,1,1,1,0,0,1,0,0,1],
@@ -38,18 +39,37 @@ blocks = list()
 enemies = list()
 pictures = list()
 
-class Block():
-    def __init__(self,x,y,width = TILE,height = TILE, color = (0,0,255)):
+class Block():# создаём класс блок
+    def __init__(self,filename,x,y,width=TILE,height = TILE,color = (0,0,0),health = 100,power = 0) ->None:
+        self.image = pygame.image.load(filename)
         self.rect = pygame.Rect(x,y,width,height)
+        self.x = x
+        self.health = health
         self.color = color
-    def collide(self, obj):# проверка соприкосновения с другим объэктом
-        return self.rect.colliderect(obj.rect) 
+        self.power = power
+    def update(self):# двигается не марио а карта
+
+        self.rect.x = self.x + step 
+
+    
+    def damage(self,value):
+        global game_runing
+        self.health -=value
+        if self.health <= 0:
+            self.health = 0
+            game_runing = False
+    def hit(self,enemy):
+        enemy.damage(self.power)
+    def collide(self, obj):
+        return self.rect.colliderect(obj.rect)    
     def draw(self):  
-        pygame.draw.rect(surface = window, rect = self.rect,color = self.color)
+
+        window.blit(self.image, (self.rect.x,self.rect.y))
 
 class Pacman(Block):
-    def __init__(self, x, y, width=TILE, height=TILE, color=(YELLOW), points = 0):
-        super().__init__(x, y, width, height, color)
+    def __init__(self,filename, x, y, width=TILE, height=TILE, color=(YELLOW), points = 0):
+        self.image = pygame.image.load(filename)
+        super().__init__(filename,x, y, width, height, color)
         self.points = points
     def collide(self, obj):# проверка соприкосновения с другим объэктом
         return self.rect.colliderect(obj.rect) 
@@ -76,7 +96,7 @@ class Pacman(Block):
             self.rect.x = 1140
         if self.rect.x >=1150:
             self.rect.x = 10
-        if self.rect.x == 256 and self.rect.y == 160:
+        if self.rect.x == 256 and self.rect.y >= 128 and self.rect.y <=160:
             self.rect.x = 1056
             self.rect.y = 224
         for block in blocks:
@@ -123,20 +143,26 @@ class Picture(Area):# копируем от сюда функции
         window.blit(self.image, (self.rect.x,self.rect.y))
     def update(self):
         if self.collide(pacman):
+            global game_runing
             win = Lable(400,200,1,1,(255,255,255))
             win.set_text('YOU WIN!!!',100)   
             win.draw()
+            
+            
 
 
 timel = Lable(400,0,1,1,(12,87,90))
-timel.set_text('time:0',40)        
+timel.set_text('time:0',40)
+
+teleport = Lable(246,155,1,1,(12,87,90))
+teleport.set_text('телепорт',15)
 
 for i,row in enumerate(map_list):# рисовка карты
         for j, el in enumerate(row):
             if el == 2:
-                pacman = Pacman(TILE*j, TILE*i,color = (YELLOW))
+                pacman = Pacman("mashroom32.png",TILE*j, TILE*i,color = (YELLOW))
             elif el == 1:
-                block = Block(TILE*j,TILE*i,color = (0,0,255))
+                block = Block("block32.png",TILE*j,TILE*i,color = (0,0,255))
                 blocks.append(block)# элементы списка зоздаются как блоки
             elif el == 3:
                 finish = Picture("pixil-frame-0.png",TILE*j,TILE*i)
@@ -147,15 +173,19 @@ game_runing = True
 timer = 1
 time = 0
 
+background=pygame.transform.scale(pygame.image.load("bg.jpg"),SIZE)
+
 while game_runing:
     window.fill(BACK) # заливка фона
+    window.blit(background,(0,0))
     for event in pygame.event.get():# выход из игры(не доработано)
         if event.type == pygame.QUIT:
             game_runing = False
 
     keys = pygame.key.get_pressed()# разришение на нажимание клавиш
-    
     if keys[pygame.K_ESCAPE]:# выход из игры
+        game_runing = False
+    if keys[pygame.K_l]:# выход из игры
         game_runing = False
 
     for block in blocks:
@@ -168,8 +198,9 @@ while game_runing:
     pacman.draw()
     pacman.update()
 
+    teleport.draw()
     
-    
+
     if timer == FPS:
         time += 1
         timel.set_text("time:"+ str(time),40)
