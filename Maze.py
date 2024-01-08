@@ -338,16 +338,16 @@ while game_runing:
         maps(maps_list[map_index])
         go = False
 
-  
-    if timer == FPS:
-        time += 1
-        if time == 60:
-            time = 0
-            time1 +=1
-        timel.set_text("Минут:"+ str(time1) +" Секунд:"+str(time),40)
+    if map_index != 3:
+        if timer == FPS:
+            time += 1
+            if time == 60:
+                time = 0
+                time1 +=1
+            timel.set_text("Минут:"+ str(time1) +" Секунд:"+str(time),40)
+        
+        timer = (timer % FPS) +1
     timel.draw()
-    timer = (timer % FPS) +1
-
     clock.tick(FPS)
     pygame.display.flip()# обновление всего экранаa
 
