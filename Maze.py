@@ -1,5 +1,6 @@
 # подключаем нужные модули
 import pygame
+from time import sleep
 # создаём константы
 FPS = 60
 BACK = (0,0,0)
@@ -34,6 +35,59 @@ map_list = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
             [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+list_map = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,4,0,0,1,0,0,0,0,0,0,0,0,0,0,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,4,0,1],
+            [1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,1,1,1,1,1,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,4,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,1],
+            [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,4,0,1,0,0,0,0,0,0],
+            [0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,1,1,1,1,1,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0],
+            [1,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,4,0,0,0,1,0,0,0,1,0,0,1,1,1,1,1,1,1,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,2,1,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+map_map =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,2,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,1,1,1,1,1,1,1,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,1,1,0,0,0,3,1,0,0,0,0,0,0,0,4,0,0,0,0,1],
+            [1,0,0,1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,1,0,0,1,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1],
+            [1,1,1,1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,1,1,1],
+            [0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0],
+            [0,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,4,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0],
+            [1,0,0,1,0,0,1,0,0,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,1],
+            [1,0,0,1,1,1,1,0,0,1,0,4,0,1,0,0,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+list_list =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+              [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+maps_list = [map_list,list_map,map_map,list_list]
 
 blocks = list()
 enemies = list()
@@ -92,13 +146,16 @@ class Pacman(Block):
             self.rect.x -= step
         if keys[pygame.K_RIGHT]:
             self.rect.x += step
-        if self.rect.x <=0:
+        if self.rect.x <=-10:
             self.rect.x = 1140
         if self.rect.x >=1150:
-            self.rect.x = 10
-        if self.rect.x == 256 and self.rect.y >= 128 and self.rect.y <=160:
+            self.rect.x = -9
+        if self.rect.x == 256 and self.rect.y >= 128 and self.rect.y <=160 and map_index == 0:
             self.rect.x = 1056
             self.rect.y = 224
+        if self.rect.x == 576 and self.rect.y == 448 and map_index == 1:
+            self.rect.x = 608
+            self.rect.y =128
         for block in blocks:
             if block.collide(self):
                 self.rect.x = original_x
@@ -109,9 +166,58 @@ class Pacman(Block):
         for enemy in enemies:
             global game_runing
             if self.collide(enemy):
-                game_runing = False
+                maps(maps_list[map_index])
 
 dx,dy = 2,2
+
+class Enemy(Pacman):
+    def __init__(self,filename, x, y, width=TILE, height=TILE, color=YELLOW):
+        self.image = pygame.image.load(filename)
+        super().__init__(filename,x, y, width, height, color)
+        self.dx = 2
+        self.dy = 2
+    def collidetop(self):# проверка соприкосновений с верху
+        flag = False
+        for block in blocks:
+            if self.rect.top == block.rect.bottom and (self.rect.left in range(block.rect.left,block.rect.right) or self.rect.right in range(block.rect.left+1,block.rect.right)):
+                flag = True
+        return flag   
+    def collidebottom(self):# проверка соприкосновений снизу
+        flag = False
+        for block in blocks:
+            if self.rect.bottom == block.rect.top and (self.rect.left in range(block.rect.left,block.rect.right) or self.rect.right in range(block.rect.left+1,block.rect.right)):
+                flag = True
+                self.rect.bottom = block.rect.top 
+        return flag
+    def collideleft(self):# проверка соприкосновений слева
+        flag = False
+        for block in blocks:
+            if self.rect.left in range( block.rect.right -2,block.rect.right +2) and (self.rect.top in range (block.rect.top,block.rect.bottom) or self.rect.bottom in range(block.rect.top+1,block.rect.bottom)):
+                flag = True
+        return flag
+              
+    def collideright(self):# проверка соприкосновений справа
+        flag = False
+        for block in blocks:
+            if self.rect.right in range( block.rect.left -2,block.rect.left +2) and (self.rect.top in range (block.rect.top,block.rect.bottom) or self.rect.bottom in range(block.rect.top+1,block.rect.bottom)):
+                flag = True
+        return flag
+    def update(self):
+        global dx,dy
+        self.rect.x +=self.dx
+        self.rect.y +=self.dy
+        
+        if self.collidetop() or self.collidebottom():
+            self.dy =-self.dy
+        if self.collideleft() or self.collideright():
+            self.dx =-self.dx
+        if self.rect.x <=0:
+            self.dx =-self.dx
+            self.dy =-self.dy
+        if self.rect.x >=1140:
+            self.dx =-self.dx
+            self.dy =-self.dy
+
 
 class Area():# копируем от сюда функции
     def __init__(self, x, y, width, height, color):
@@ -143,36 +249,45 @@ class Picture(Area):# копируем от сюда функции
         window.blit(self.image, (self.rect.x,self.rect.y))
     def update(self):
         if self.collide(pacman):
-            global game_runing
-            win = Lable(400,200,1,1,(255,255,255))
-            win.set_text('YOU WIN!!!',100)   
-            win.draw()
-            
-            
+            global game_runing,map_index,go
+            go = True
+            map_index+=1
 
 
+go = False
 timel = Lable(400,0,1,1,(12,87,90))
-timel.set_text('time:0',40)
+timel.set_text("Минут:0"+" Секунд:0",40)
+timer = 1
+time = 0
+time1 = 0
+time_water = 1
+timew = 30
+timew1 = 2
 
-teleport = Lable(246,155,1,1,(12,87,90))
-teleport.set_text('телепорт',15)
+def maps(couch):
+    global pacman,blocks,enemies,pictures
+    blocks = list()
+    enemies = list()
+    pictures = list()
+    for i,row in enumerate(couch):# рисовка карты
+            for j, el in enumerate(row):
+                if el == 2:
+                    pacman = Pacman("images/mashroom32.png",TILE*j, TILE*i,color = (YELLOW))
+                elif el == 1:
+                    block = Block("images/block32.png",TILE*j,TILE*i,color = (0,0,255))
+                    blocks.append(block)# элементы списка зоздаются как блоки
+                elif el == 3:
+                    finish = Picture("images/pixil-frame-0.png",TILE*j,TILE*i)
+                    pictures.append(finish)
+                elif el == 4:
+                    enemy = Enemy("images/enemy.png",TILE*j,TILE*i,color = (255,0,0))
+                    enemies.append(enemy)
 
-for i,row in enumerate(map_list):# рисовка карты
-        for j, el in enumerate(row):
-            if el == 2:
-                pacman = Pacman("images/mashroom32.png",TILE*j, TILE*i,color = (YELLOW))
-            elif el == 1:
-                block = Block("images/block32.png",TILE*j,TILE*i,color = (0,0,255))
-                blocks.append(block)# элементы списка зоздаются как блоки
-            elif el == 3:
-                finish = Picture("images/pixil-frame-0.png",TILE*j,TILE*i)
-                pictures.append(finish)
-
-
+map_index = 0
 game_runing = True
 timer = 1
 time = 0
-
+maps(maps_list[map_index])
 background=pygame.transform.scale(pygame.image.load("images/bg.jpg"),SIZE)
 
 while game_runing:
@@ -181,7 +296,18 @@ while game_runing:
     for event in pygame.event.get():# выход из игры(не доработано)
         if event.type == pygame.QUIT:
             game_runing = False
-
+    if map_index == 0:
+        teleport = Lable(246,155,1,1,(12,87,90))
+    elif map_index ==1:
+        teleport = Lable(572,455,1,1,(12,87,90))
+    elif map_index == 3:
+        win = Lable(246,250,1,1,(12,87,90))
+        win.set_text("ПОБЕДА!!!",100)
+        win.draw()
+        leave = Lable(246,350,1,1,(12,87,90))
+        leave.set_text("Выход - ESCAPE",30)
+        leave.draw()
+    teleport.set_text('телепорт',15)
     keys = pygame.key.get_pressed()# разришение на нажимание клавиш
     if keys[pygame.K_ESCAPE]:# выход из игры
         game_runing = False
@@ -190,23 +316,39 @@ while game_runing:
 
     for block in blocks:
         block.draw()
-    
+    for enemy in enemies:
+        enemy.draw()
+        enemy.update()
     for picture in pictures:
         picture.draw()
         picture.update()
 
+    if keys[pygame.K_r]:
+        maps(maps_list[map_index])
+
     pacman.draw()
     pacman.update()
 
-    teleport.draw()
+    #print(pacman.rect.x,pacman.rect.y)
+    if map_index >=0 and map_index <=1:
+        teleport.draw()
     
+    if go == True:
+        
+        maps(maps_list[map_index])
+        go = False
 
+  
     if timer == FPS:
         time += 1
-        timel.set_text("time:"+ str(time),40)
+        if time == 60:
+            time = 0
+            time1 +=1
+        timel.set_text("Минут:"+ str(time1) +" Секунд:"+str(time),40)
     timel.draw()
-
     timer = (timer % FPS) +1
 
     clock.tick(FPS)
     pygame.display.flip()# обновление всего экранаa
+
+#
