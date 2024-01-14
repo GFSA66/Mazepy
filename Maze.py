@@ -282,7 +282,7 @@ def maps(couch):
                 elif el == 4:
                     enemy = Enemy("images/enemy.png",TILE*j,TILE*i,color = (255,0,0))
                     enemies.append(enemy)
-
+                    
 map_index = 0
 game_runing = True
 timer = 1
